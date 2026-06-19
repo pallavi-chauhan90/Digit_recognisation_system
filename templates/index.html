@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digit AI Vision</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top, #0a0a0a, #000000);
+            overflow: hidden;
+            color: white;
+        }
+        /* 🔢 Background floating digits */
+        
+        .digits {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .digits span {
+            position: absolute;
+            font-size: 40px;
+            color: rgba(0, 255, 204, 0.08);
+            animation: float 10s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        /* Glass card */
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 380px;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(18px);
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 255, 200, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #111;
+            color: white;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: black;
+            background: linear-gradient(90deg, #00ffcc, #00aaff);
+            transition: 0.3s ease;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+        }
+        
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+            animation: pop 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pop {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- 🔢 Floating background digits -->
+    <div class="digits">
+        <span style="left:10%; animation-delay:0s;">0</span>
+        <span style="left:20%; animation-delay:2s;">1</span>
+        <span style="left:30%; animation-delay:4s;">2</span>
+        <span style="left:40%; animation-delay:1s;">3</span>
+        <span style="left:50%; animation-delay:3s;">4</span>
+        <span style="left:60%; animation-delay:5s;">5</span>
+        <span style="left:70%; animation-delay:2s;">6</span>
+        <span style="left:80%; animation-delay:4s;">7</span>
+        <span style="left:90%; animation-delay:1s;">8</span>
+    </div>
+
+    <div class="container">
+
+        <h1>🧠 Hand written digit recognition</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="file" name="image" required>
+
+            <button type="submit">Predict Digit</button>
+
+        </form>
+
+        {% if prediction is not none %}
+        <div class="result">
+            Predicted Digit: {{ prediction }}
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
